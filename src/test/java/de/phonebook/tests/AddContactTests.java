@@ -20,9 +20,7 @@ public class AddContactTests extends TestBase{
     public void addContactPositiveTest() {
         clickOnAddLink();
         fillContactForm(new Contact()
-
                 .setName("Oliver")
-
                 .setLastname("Kan")
                 .setPhone("1234567890")
                 .setEmail("kan@gm.com")
