@@ -6,12 +6,15 @@ import de.phonebook.fw.UserHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 
 public class ApplicationManager {
 
+    String browser;
     WebDriver driver;
 
     UserHelper user;
@@ -20,10 +23,23 @@ public class ApplicationManager {
 
     public static SoftAssert softAssert;
 
+    public ApplicationManager(String browser) {
+        this.browser = browser;
+    }
+
     public void init() {
-        System.err.close();
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+
+        if (browser.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            WebDriverManager.edgedriver().setup();
+            driver = new EdgeDriver();
+        }
+
         driver.get("https://telranedu.web.app");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
