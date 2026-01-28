@@ -1,9 +1,12 @@
 package de.phonebook.tests;
 
 import de.phonebook.core.TestBase;
+import de.phonebook.data.ContactData;
+import de.phonebook.data.UserData;
 import de.phonebook.model.Contact;
 import de.phonebook.model.User;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -17,8 +20,8 @@ public class AddContactNegativeTests extends TestBase {
 
         app.getUser().clickOnLoginLink();
         app.getUser().fillLoginRegisterForm(new User()
-                .setEmail("manuel@gm.com")
-                .setPassword("Manuel1234$"));
+                .setEmail(UserData.EMAIL)
+                .setPassword(UserData.PASSWORD));
         app.getUser().clickOnLoginButton();
     }
 
@@ -26,13 +29,21 @@ public class AddContactNegativeTests extends TestBase {
     public void addContactWithInvalidPhoneTest() {
         app.getContact().clickOnAddLink();
         app.getContact().fillContactForm(new Contact()
-                .setName("Oliver")
-                .setLastname("Kan")
-                .setPhone("123456789")
-                .setEmail("kan@gm.com")
-                .setAddress("Berlin")
-                .setDescription("goalkeeper"));
+                .setName(ContactData.NAME)
+                .setLastname(ContactData.LASTNAME)
+                .setPhone(ContactData.INVALID_PHONE)
+                .setEmail(ContactData.EMAIL)
+                .setAddress(ContactData.ADDRESS)
+                .setDescription(ContactData.DESCRIPTION));
         app.getContact().clickOnSaveButton();
         Assert.assertTrue(app.getContact().isAlertPresent());
+    }
+
+    @AfterMethod(enabled = false)
+    public void postCondition() {
+        app.getContact().clickOnContactLink();
+        while (!app.getContact().isContactListEmpty()) {
+            app.getContact().removeContact();
+        }
     }
 }

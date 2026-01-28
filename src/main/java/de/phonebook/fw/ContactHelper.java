@@ -39,7 +39,7 @@ public class ContactHelper extends BaseHelper {
     public boolean verifyContactByName(String text) {
         List<WebElement> contacts = driver.findElements(By.cssSelector("h2"));
         for (WebElement element: contacts) {
-            if (element.getText().equals(text))
+            if (element.getText().contains(text))
                 return true;
         }
         return false;
@@ -50,5 +50,13 @@ public class ContactHelper extends BaseHelper {
             return driver.findElements(By.cssSelector(".contact-item_card__2SOIM")).size();
         }
         return 0;
+    }
+
+    public void clickOnContactLink() {
+        click(By.cssSelector("[href='/contacts']"));
+    }
+
+    public boolean isContactListEmpty() {
+        return isElementPresent(By.xpath("//*[contains(.,'No Contacts')]"));
     }
 }

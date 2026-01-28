@@ -1,6 +1,7 @@
 package de.phonebook.tests;
 
 import de.phonebook.core.TestBase;
+import de.phonebook.data.UserData;
 import de.phonebook.model.User;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -35,8 +36,19 @@ public class LoginTests extends TestBase {
     //    System.out.println("************Test");
         app.getUser().clickOnLoginLink();
         app.getUser().fillLoginRegisterForm(new User()
-                .setEmail("manuel@gm.com")
-                .setPassword("Manuel1234$"));
+                .setEmail(UserData.EMAIL)
+                .setPassword(UserData.PASSWORD));
+        app.getUser().clickOnLoginButton();
+        Assert.assertTrue(app.getUser().isSignOutButtonPresent());
+    }
+
+    @Parameters({"email","password"})
+    @Test
+    public void loginRegisteredUserParametrizedTest(String email, String password) {
+        app.getUser().clickOnLoginLink();
+        app.getUser().fillLoginRegisterForm(new User()
+                .setEmail(email)
+                .setPassword(password));
         app.getUser().clickOnLoginButton();
         Assert.assertTrue(app.getUser().isSignOutButtonPresent());
     }
@@ -45,7 +57,7 @@ public class LoginTests extends TestBase {
     public void loginRegisteredUserWithoutEmailNegativeTest() {
         app.getUser().clickOnLoginLink();
         app.getUser().fillLoginRegisterForm( new User()
-                .setPassword("Manuel1234$"));
+                .setPassword(UserData.PASSWORD));
         app.getUser().clickOnLoginButton();
         Assert.assertTrue(app.getUser().isAlertPresent());
     }

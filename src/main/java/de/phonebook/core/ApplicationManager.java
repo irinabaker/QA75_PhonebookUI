@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
@@ -38,6 +39,9 @@ public class ApplicationManager {
         } else if (browser.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
+        } else if (browser.equalsIgnoreCase("safari")) {
+            WebDriverManager.safaridriver().setup();
+            driver = new SafariDriver();
         }
 
         driver.get("https://telranedu.web.app");
