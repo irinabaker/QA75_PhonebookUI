@@ -3,6 +3,7 @@ package de.phonebook.tests;
 import de.phonebook.core.TestBase;
 import de.phonebook.data.UserData;
 import de.phonebook.model.User;
+import de.phonebook.utils.MyRetryAnalyzer;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -43,7 +44,7 @@ public class LoginTests extends TestBase {
     }
 
     @Parameters({"email","password"})
-    @Test
+    @Test(retryAnalyzer = MyRetryAnalyzer.class)
     public void loginRegisteredUserParametrizedTest(String email, String password) {
         app.getUser().clickOnLoginLink();
         app.getUser().fillLoginRegisterForm(new User()
