@@ -5,6 +5,7 @@ import de.phonebook.data.ContactData;
 import de.phonebook.data.UserData;
 import de.phonebook.model.Contact;
 import de.phonebook.model.User;
+import de.phonebook.utils.MyDataProviders;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class AddContactTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void precondition() {
         if (!app.getUser().isLoginLinkPresent()) {
             app.getUser().clickOnSignOutButton();
@@ -34,7 +35,7 @@ public class AddContactTests extends TestBase {
         app.getUser().clickOnLoginButton();
     }
 
-    @Test
+    @Test(groups = "demo")
     public void addContactPositiveTest() {
         app.getContact().clickOnAddLink();
         app.getContact().fillContactForm(new Contact()
@@ -55,16 +56,7 @@ public class AddContactTests extends TestBase {
         app.getContact().removeContact();
     }
 
-    @DataProvider
-    public Iterator<Object[]> addContact() {
-        List<Object[]> list = new ArrayList<>();
-        list.add(new Object[]{"Karl","Adam","1234567890","adam@gm.com","Koblenz","goalkeeper"});
-        list.add(new Object[]{"Karl1","Adam","1234567890","adam@gm.com","Koblenz","goalkeeper"});
-        list.add(new Object[]{"Karl2","Adam","1234567890","adam@gm.com","Koblenz","goalkeeper"});
-        return list.iterator();
-    }
-
-    @Test(dataProvider = "addContact")
+    @Test(dataProvider = "addContact", dataProviderClass = MyDataProviders.class)
     public void addContactPositiveFromDataProviderTest(String name, String lastname, String phone,
                                                        String email, String address, String desc) {
         app.getContact().clickOnAddLink();
@@ -80,20 +72,13 @@ public class AddContactTests extends TestBase {
         Assert.assertTrue(app.getContact().verifyContactByName(name));
     }
 
-    @DataProvider
-    public Iterator<Object[]> addContactFromCsv() throws IOException {
-        List<Object[]> list = new ArrayList<>();
-        BufferedReader reader = new BufferedReader
-                (new FileReader(new File("src/test/resources/contact.csv")));
-        String line = reader.readLine();
-        while (line != null) {
-            String[] split = line.split(",");
-            list.add(new Object[]{new Contact().setName(split[0]).setLastname(split[1]).setPhone(split[2])
-                    .setEmail(split[3]).setAddress(split[4]).setDescription(split[5])});
-            line = reader.readLine();
-        }
+    @Test(dataProvider = "addContactFromCsv", dataProviderClass = MyDataProviders.class)
+    public void addContactPositiveFromDataProviderCSVTest(Contact contact) {
+        app.getContact().clickOnAddLink();
+        app.getContact().fillContactForm(contact);
+        app.getContact().clickOnSaveButton();
 
-        return list.iterator();
+        Assert.assertTrue(app.getContact().verifyContactByPhone(contact.getPhone()));
     }
 
 }

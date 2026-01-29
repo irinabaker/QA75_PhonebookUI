@@ -7,14 +7,14 @@ import org.testng.annotations.Test;
 
 public class HomePageTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void ensurePrecondition() {
         if (!app.getHomePage().isHomeComponentPresent()) {
             app.getHomePage().clickOnHomeLink();
         }
     }
 
-    @Test
+    @Test(groups = "demo")
     public void isHomeComponentPresentTest() {
        //System.out.println("Home component is " + isHomeComponentPresent());
         Assert.assertTrue(app.getHomePage().isHomeComponentPresent());

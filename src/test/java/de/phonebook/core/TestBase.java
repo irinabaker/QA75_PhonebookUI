@@ -7,6 +7,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class TestBase {
 
@@ -15,7 +16,7 @@ public class TestBase {
 
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void setUp() {
        // System.out.println("Before suite");
         app.init();
@@ -31,18 +32,18 @@ public class TestBase {
 //        System.out.println("***After test");
 //    }
 
-    @AfterSuite(enabled = true)
+    @AfterSuite(alwaysRun = true)
     public void tearDown() {
      //   System.out.println("After suite");
         app.stop();
     }
 
-    @BeforeMethod
-    public void startTest(Method method) {
-        logger.info("Start test {}",method.getName());
+    @BeforeMethod(alwaysRun = true)
+    public void startTest(Method method, Object[] p) {
+        logger.info("Start test {} with data: {}",method.getName(), Arrays.asList(p));
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void stopTest(ITestResult result) {
         if (result.isSuccess()) {
             logger.info("PASSED: {}",result.getMethod().getMethodName());
@@ -52,6 +53,16 @@ public class TestBase {
         }
         logger.info("Stop test");
         logger.info("******************************************************");
+    }
+
+    @BeforeGroups("demo")
+    public void setUpDemoGroup() {
+        logger.info("Start demo group");
+    }
+
+    @AfterGroups("demo")
+    public void stopDemoGroup() {
+        logger.info("Stop demo group");
     }
 
 }

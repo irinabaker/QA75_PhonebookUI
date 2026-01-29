@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.phonebook.tests.HomePageTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-01-29T17:47:54" hostname="iras-Laptop.local" time="0.004">
+  <properties/>
+  <testcase name="isHomeComponentPresentTest" classname="de.phonebook.tests.HomePageTests" time="0.004"/>
+  <system-out><![CDATA[18:47:54.155 [Test worker] INFO  de.phonebook.core.TestBase -- Start demo group
+18:47:54.200 [Test worker] INFO  de.phonebook.core.TestBase -- Start test isHomeComponentPresentTest with data: []
+18:47:54.218 [Test worker] INFO  de.phonebook.core.TestBase -- PASSED: isHomeComponentPresentTest
+18:47:54.219 [Test worker] INFO  de.phonebook.core.TestBase -- Stop test
+18:47:54.219 [Test worker] INFO  de.phonebook.core.TestBase -- ******************************************************
+18:47:54.220 [Test worker] INFO  de.phonebook.core.TestBase -- Stop demo group
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

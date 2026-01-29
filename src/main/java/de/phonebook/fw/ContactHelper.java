@@ -4,9 +4,6 @@ import de.phonebook.core.BaseHelper;
 import de.phonebook.model.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class ContactHelper extends BaseHelper {
 
@@ -37,11 +34,7 @@ public class ContactHelper extends BaseHelper {
     }
 
     public boolean verifyContactByName(String text) {
-        List<WebElement> contacts = driver.findElements(By.cssSelector("h2"));
-        for (WebElement element: contacts) {
-            if (element.getText().contains(text))
-                return true;
-        }
+        if (verifyText(text, By.cssSelector("h2"))) return true;
         return false;
     }
 
@@ -58,5 +51,10 @@ public class ContactHelper extends BaseHelper {
 
     public boolean isContactListEmpty() {
         return isElementPresent(By.xpath("//*[contains(.,'No Contacts')]"));
+    }
+
+    public boolean verifyContactByPhone(String text) {
+        if (verifyText(text,By.cssSelector("h3"))) return true;
+        return false;
     }
 }

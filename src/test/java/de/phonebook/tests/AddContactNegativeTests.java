@@ -39,7 +39,7 @@ public class AddContactNegativeTests extends TestBase {
         Assert.assertTrue(app.getContact().isAlertPresent());
     }
 
-    @AfterMethod(enabled = false)
+    @AfterMethod(enabled = true)
     public void postCondition() {
         app.getContact().clickOnContactLink();
         while (!app.getContact().isContactListEmpty()) {

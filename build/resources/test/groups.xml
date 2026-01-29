@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Groups" verbose="1">
+    <groups>
+        <run>
+            <include name="demo"/>
+        </run>
+    </groups>
+    <test name="HomePageTest">
+        <classes>
+            <class name="de.phonebook.tests.HomePageTests"/>
+            <class name="de.phonebook.tests.AddContactTests"/>
+        </classes>
+    </test>
+</suite>

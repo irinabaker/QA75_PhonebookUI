@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 public class BaseHelper {
 
@@ -56,11 +57,13 @@ public class BaseHelper {
     }
 
     public String takeScreenshot() {
-//     if (isAlertPresent()) {
-//         WebDriverWait wait = getWait(5);
-//         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-//         alert.accept();
-//     }
+        try {
+            WebDriverWait wait = getWait(5);
+            Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            alert.accept();
+        } catch (TimeoutException ignored) {
+        }
+
         File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         File screen = new File("screenshots/screen-" + System.currentTimeMillis() + ".png");
 
@@ -70,5 +73,14 @@ public class BaseHelper {
             throw new RuntimeException(e);
         }
         return screen.getAbsolutePath();
+    }
+
+    public boolean verifyText(String text, By locator) {
+        List<WebElement> contacts = driver.findElements(locator);
+        for (WebElement element: contacts) {
+            if (element.getText().contains(text))
+                return true;
+        }
+        return false;
     }
 }
