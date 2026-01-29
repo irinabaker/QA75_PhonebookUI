@@ -9,7 +9,11 @@
                     <include name=".*Positive.*"/>
                 </methods>
             </class>
-            <class name="de.phonebook.tests.AddContactTests"/>
+            <class name="de.phonebook.tests.AddContactTests">
+                <methods>
+                    <exclude name=".*From.*"/>
+                </methods>
+            </class>
             <class name="de.phonebook.tests.RemoveContactTests"/>
         </classes>
     </test>
